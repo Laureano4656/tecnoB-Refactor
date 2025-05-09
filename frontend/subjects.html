@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de materias</title>
+    <link rel="stylesheet" href="css/w3.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+    <body class="w3-container">
+
+        <h2 class="w3-center w3-margin-top">Gestión de Materias</h2>
+
+        <form id="subjectForm" class="w3-card w3-padding w3-margin-bottom w3-light-grey">
+            <input type="hidden" id="subjectId" />
+
+            <div class="w3-row-padding">
+                <div class="w3-third">
+                    <label>Nombre de la materia</label>
+                    <input class="w3-input" type="text" id="name" required />
+                </div>
+                <div class="w3-third">
+                    <label>Descripcion</label>
+                    <input class="w3-input" type="text" id="description" required />
+                </div>
+                <div class="w3-third">
+                    <label>Año</label>
+                    <input class="w3-input" type="number" id="year" required />
+                </div>
+                <div class="w3-third">
+                    <label>Nombre del profesor</label>
+                    <input class="w3-input" type="text" id="professor_name" required />
+                </div>
+            </div>
+
+            <div class="w3-margin-top">
+                <button class="w3-button w3-green" type="submit">Guardar</button>
+                <button class="w3-button w3-grey" type="reset"
+                    onclick="document.getElementById('subjectId').value = ''">Cancelar</button>
+            </div>
+        </form>
+
+        <table class="w3-table-all w3-hoverable w3-card">
+            <thead>
+                <tr class="w3-light-blue">
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Año</th>
+                    <th>Profesor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="subjectTableBody"></tbody>
+        </table>
+        <a href="index.html" style="margin-top: 20px;" class="w3-button w3-green"><span>&#8592;</span> Estudiantes </a>
+        <script src="js/frontDispatcherSubjects.js"></script>
+    </body>
+
+</html>

@@ -13,6 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    require_once("./routes/".$action."Routes.php");
+} else {
+   http_response_code(400);
+    echo json_encode(array("message" => "Action not specified"));
+    exit();
+}
 
-require_once("./routes/studentsRoutes.php");
 ?>
