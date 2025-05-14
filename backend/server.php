@@ -30,8 +30,9 @@ $segments = explode('/', $route);
 $action = $segments[0] ?? null;
 
 
-if (file_exists("./routes/".$action."Routes.php")) {
-    require_once("./routes/".$action."Routes.php");
+if ($action) {
+    $_GET['module'] = $action;
+    require_once("./routes/Routes.php");
 } else {
     http_response_code(404);
     echo json_encode(array("message" => "Route not found"));
