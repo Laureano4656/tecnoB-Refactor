@@ -1,5 +1,5 @@
 //frontDispatcher_2.0
-const API_URL = '../backend/students';
+const API_URL = '../backend/server.php/students';
 
 document.addEventListener('DOMContentLoaded', () => 
 {
