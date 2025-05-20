@@ -1,5 +1,5 @@
 //frontDispatcher_2.0
-const API_URL = '../backend/server.php/students';
+const API_URL = '../../backend/server.php/students';
 
 document.addEventListener('DOMContentLoaded', () => 
 {
@@ -86,12 +86,16 @@ document.addEventListener('DOMContentLoaded', () =>
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Borrar';
-                deleteBtn.classList.add('w3-button', 'w3-red', 'w3-small');
+                deleteBtn.classList.add('w3-button', 'w3-red', 'w3-small','w3-margin-right');
                 deleteBtn.onclick = () => deleteStudent(student.id);
 
+                const subjectsBtn = document.createElement('a');
+                subjectsBtn.textContent = 'Materias'
+                subjectsBtn.classList.add('w3-button', 'w3-small', 'w3-green')
+                subjectsBtn.href = `studentSubjects.html?studentId=${student.id}`;
                 tdActions.appendChild(editBtn);
                 tdActions.appendChild(deleteBtn);
-
+                tdActions.appendChild(subjectsBtn);
                 tr.appendChild(tdName);
                 tr.appendChild(tdEmail);
                 tr.appendChild(tdAge);
