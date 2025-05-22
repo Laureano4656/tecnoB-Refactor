@@ -1,7 +1,7 @@
 <?php
 function getStudentSubjects($conn, $id)
 {
-  $sql = 'SELECT student_subject_id,subjects.subject_id,subjects.name,students.fullname,students.id AS student_id,state,nota 
+  $sql = 'SELECT students_subjects.id,subjects.subject_id,subjects.name,students.fullname,students.id AS student_id,state,grade 
      FROM students_subjects
      INNER JOIN students ON students.id = students_subjects.student_id
      INNER JOIN subjects ON subjects.subject_id = students_subjects.subject_id
@@ -14,7 +14,7 @@ function getStudentSubjects($conn, $id)
 }
 function createStudentSubject($conn, $student_id, $subject_id, $state, $nota)
 {
-  $sql = "INSERT INTO students_subjects (student_id, subject_id,state,nota) VALUES (?, ?, ?, ?)";
+  $sql = "INSERT INTO students_subjects (student_id, subject_id,state,grade) VALUES (?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("iisi", $student_id, $subject_id, $state, $nota);
   return $stmt->execute();
@@ -22,7 +22,7 @@ function createStudentSubject($conn, $student_id, $subject_id, $state, $nota)
 
 function updateStudentSubject($conn, $id, $state, $nota)
 {
-  $sql = "UPDATE students_subjects SET state = ?, nota = ? WHERE student_subject_id = ?";
+  $sql = "UPDATE students_subjects SET state = ?, grade = ? WHERE id = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("ssi", $state, $nota, $id);
   return $stmt->execute();

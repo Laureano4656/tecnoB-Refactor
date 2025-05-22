@@ -13,7 +13,7 @@
   <h2 class="w3-center w3-margin-top">Gestión de Materias de Estudiantes</h2>
 
   <form id="studentSubjectForm" class="w3-card w3-padding w3-margin-bottom w3-light-grey">
-    <input type="hidden" id="studentSubjectId" />
+    <input type="hidden" id="studentSubjectId" />    
     <div class="w3-row-padding">
       <div class="w3-third">
         <label>Nombre de la materia</label>
@@ -23,7 +23,7 @@
       </div>
       <div class="w3-third">
         <label>Nota</label>
-        <input class="w3-input" type="number" id="nota" required />
+        <input class="w3-input" type="number" id="grade" required />
       </div>
       <div class="w3-third">
         <label>Condición</label>
@@ -58,7 +58,7 @@
     <tbody id="studentSubjectTableBody"></tbody>
   </table>
   <a href="./students.html" class="w3-button w3-green w3-margin-top" ><span>&#8592;</span> Estudiantes </a>
-  <script src="../js/studentsSubjectDispatcher.js"></script>
+  <script type="module" src="../js/controllers/studentsSubjectsController.js"></script>
 </body>
 </html>
 
