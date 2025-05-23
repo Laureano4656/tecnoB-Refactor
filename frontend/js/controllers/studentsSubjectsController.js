@@ -27,6 +27,7 @@ async function loadSubjects() {
     const subjects=await  subjectsAPI.fetchAll()
     renderSubjectSelect(subjects)
   } catch (err) {
+    alert('Error cargando materias')
     console.error(err.message)
   }
 }
@@ -66,8 +67,8 @@ function setupFormHandler() {
       }
       clearForm()
       loadStudentSubjects()
-    } catch (err) {
-      console.error(err.message)
+    } catch (err) {      
+      alert(`Error guardando materia del estudiante: ${err}`)
     }
   })
 }
@@ -83,6 +84,7 @@ async function loadStudentSubjects() {
     renderStudentSubjectTable(StudentSubjects)
     document.getElementById('titulo').textContent = `Materias de ${StudentSubjects[0].fullname}`;
   } catch (err) {
+    alert('Error cargando materias del estudiante')
     console.error(err.message)
   }
 }
@@ -149,6 +151,7 @@ async function deleteStudentSubject(id) {
     loadSubjects()
   } catch (err) {
     console.error(err)
+    alert('Error al borrar la materia del estudiante')
   }
 }
 document.addEventListener('DOMContentLoaded', () => {
