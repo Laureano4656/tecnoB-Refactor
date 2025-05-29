@@ -18,13 +18,12 @@ function handleGet($conn)
 function handlePost($conn)
 {
     try {
-        $input = json_decode(file_get_contents("php://input"), true);
-        $response = createStudentSubject($conn, $input['student_id'], $input['subject_id'], $input['state'], $input['nota']);        
-        if ($response == true) {
+        $input = json_decode(file_get_contents("php://input"), true); 
+        
+        if (createStudentSubject($conn, $input['student_id'], $input['subject_id'], $input['state'], $input['nota'])) {
             echo json_encode(["message" => "Materia para estudiante agregado correctamente"]);
         } 
-    } catch (Exception $e) {
-        // Log the error message for debugging        
+    } catch (Exception $e) {              
         http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
         echo json_encode(["error" => $e->getMessage()]);
         return;

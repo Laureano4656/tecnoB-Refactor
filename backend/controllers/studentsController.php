@@ -16,32 +16,41 @@ function handleGet($conn) {
 }
 
 function handlePost($conn) {
-    $input = json_decode(file_get_contents("php://input"), true);
-    if (createStudent($conn, $input['fullname'], $input['email'], $input['age'])) {
-        echo json_encode(["message" => "Estudiante agregado correctamente"]);
-    } else {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo agregar"]);
+    try{
+        $input = json_decode(file_get_contents("php://input"), true);        
+        if (createStudent($conn, $input['fullname'], $input['email'], $input['age'])) {
+            echo json_encode(["message" => "Estudiante agregado correctamente"]);
+        }
+    }catch(Exception $e){
+        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+        echo json_encode(["error" => $e->getMessage()]);
+        return;
     }
 }
 
 function handlePut($conn) {
-    $input = json_decode(file_get_contents("php://input"), true);
-    if (updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age'])) {
-        echo json_encode(["message" => "Actualizado correctamente"]);
-    } else {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo actualizar"]);
+    try{
+        $input = json_decode(file_get_contents("php://input"), true);
+        if (updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age'])) {
+            echo json_encode(["message" => "Actualizado correctamente"]);
+        }
+    }catch(Exception $e){
+        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+        echo json_encode(["error" => $e->getMessage()]);
+        return;
     }
 }
 
 function handleDelete($conn) {
-    $input = json_decode(file_get_contents("php://input"), true);
-    if (deleteStudent($conn, $input['id'])) {
-        echo json_encode(["message" => "Eliminado correctamente"]);
-    } else {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo eliminar"]);
+    try{
+        $input = json_decode(file_get_contents("php://input"), true);
+        if (deleteStudent($conn, $input['id'])) {
+            echo json_encode(["message" => "Eliminado correctamente"]);
+        } 
+    }catch(Exception $e){
+        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+        echo json_encode(["error" => $e->getMessage()]);
+        return;
     }
 }
 ?>
