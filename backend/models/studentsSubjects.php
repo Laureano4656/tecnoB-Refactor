@@ -17,7 +17,19 @@ function createStudentSubject($conn, $student_id, $subject_id, $state, $nota)
   $sql = "INSERT INTO students_subjects (student_id, subject_id,state,grade) VALUES (?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("iisi", $student_id, $subject_id, $state, $nota);
-  return $stmt->execute();
+  try {
+    
+    if ($stmt->execute())
+      return true;
+    else
+      throw new Exception("Error al agregar la materia" . $stmt->error, $stmt->errno);
+  } catch (Exception $e) {    
+    if ($e->getCode() == 1062) { // Duplicate entry error code
+      throw new Exception("Ya existe una materia con el mismo nombre para este estudiante",409);
+    } else {
+      throw $e;
+    }
+  }
 }
 
 function updateStudentSubject($conn, $id, $state, $nota)
@@ -35,6 +47,3 @@ function deleteStudentSubject($conn, $id)
   $stmt->bind_param("i", $id);
   return $stmt->execute();
 }
-
-
-?>

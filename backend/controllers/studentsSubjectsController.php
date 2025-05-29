@@ -19,16 +19,13 @@ function handlePost($conn)
 {
     try {
         $input = json_decode(file_get_contents("php://input"), true);
-        // if (!isset($input['student_id']) || !isset($input['subject_id']) || !isset($input['state']) || !isset($input['nota'])) {
-        //     throw new Exception("Faltan datos requeridos");
-        // }
-        if (createStudentSubject($conn, $input['student_id'], $input['subject_id'], $input['state'], $input['nota'])) {
+        $response = createStudentSubject($conn, $input['student_id'], $input['subject_id'], $input['state'], $input['nota']);        
+        if ($response == true) {
             echo json_encode(["message" => "Materia para estudiante agregado correctamente"]);
-        } else {
-            throw new Exception("No se pueden tener dos materias iguales");
-        }
+        } 
     } catch (Exception $e) {
-        http_response_code(500);
+        // Log the error message for debugging        
+        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
         echo json_encode(["error" => $e->getMessage()]);
         return;
     }
