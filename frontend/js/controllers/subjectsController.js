@@ -1,4 +1,4 @@
-import { subjectsAPI } from '../api/subjectsAPI'
+import { subjectsAPI } from '../api/subjectsAPI.js'
 
 //frontDispatcher_2.0
 
@@ -63,14 +63,32 @@ function fillForm(subject) {
 
 function createActionsCell(subject) {
 	const tdActions = document.createElement('td')
-	const editBtn = document.createElement('button')
-	editBtn.textContent = 'Editar'
-	editBtn.classList.add('w3-button', 'w3-blue', 'w3-small', 'w3-margin-right')
+	const editBtn = document.createElement('a')
+	editBtn.className = 'tooltip-container'
+	const editIcon = document.createElement('span')
+	editIcon.className = 'material-icons'
+	editIcon.textContent = 'edit'
+	const editToolTip = document.createElement('div')
+	editToolTip.className = 'tooltip'
+	editToolTip.textContent = 'Editar'
+	editBtn.appendChild(editToolTip)
+	editBtn.appendChild(editIcon)
 	editBtn.addEventListener('click', () => fillForm(subject))
 
-	const deleteBtn = document.createElement('button')
-	deleteBtn.textContent = 'Borrar'
-	deleteBtn.classList.add('w3-button', 'w3-red', 'w3-small')
+	const deleteBtn = document.createElement('a')
+	deleteBtn.classList.add(
+		'tooltip-container',
+		'w3-margin-left',
+		'w3-margin-right',
+	)
+	const deleteIcon = document.createElement('span')
+	deleteIcon.className = 'material-icons'
+	deleteIcon.textContent = 'delete'
+	const deleteToolTip = document.createElement('div')
+	deleteToolTip.className = 'tooltip'
+	deleteToolTip.textContent = 'Eliminar'
+	deleteBtn.appendChild(deleteToolTip)
+	deleteBtn.appendChild(deleteIcon)
 	deleteBtn.addEventListener('click', () => deleteSubject(subject.subject_id))
 
 	tdActions.appendChild(editBtn)

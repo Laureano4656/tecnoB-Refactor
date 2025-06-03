@@ -1,0 +1,12 @@
+.customForm {
+    padding: 0.5% 2.5%;
+    background-color: #444746;
+    border-radius: 10px;
+    height: fit-content;
+    color: #d9e6fa;
+    min-height: 30%;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    align-items: center;
+}

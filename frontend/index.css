@@ -1,0 +1,33 @@
+@import url('./css/customButton.css');
+@import url('./css/customTable.css');
+@import url('./css/customForm.css');
+@import url('./css/tooltip.css');
+@import url('./css/inputs/selectInput.css');
+@import url('./css/inputs/textInput.css');
+
+:root {
+    --primaryColor1: rgb(255, 209, 170);
+    --primaryColor2: rgb(212, 154, 106);
+    --primaryColor0: rgb(170, 108, 57);
+    --primaryColor3: rgb(128, 6, 21);
+    --primaryColor4: rgb(85, 38, 0);
+}
+
+body,
+html {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(60, 60, 60);
+    color: white;
+    min-height: 100vh;
+    min-width: 100vw;
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

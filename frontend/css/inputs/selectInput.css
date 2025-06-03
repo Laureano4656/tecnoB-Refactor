@@ -1,0 +1,41 @@
+.custom-outlined-select {
+    position: relative;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+}
+
+.custom-select {
+    width: -webkit-fill-available;
+    padding: 16px 10px 8px;
+    font-size: 16px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    appearance: none;
+    vertical-align: middle;
+    outline: none;
+
+    background: white;
+}
+
+.custom-select:focus {
+    border-color: #1976d2;
+
+}
+
+
+
+.custom-outlined-select::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid gray;
+    transform: translateY(-50%);
+    pointer-events: none;
+}

@@ -1,0 +1,54 @@
+.customTable {
+    --table-bg-color: rgb(68, 71, 70);
+    max-width: 100%;
+    min-width: 40%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: var(--table-bg-color);
+    border-radius: 8px;
+    /* overflow: hidden; */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --text-color: rgb(217 230 250);
+    color: var(--text-color);
+}
+
+.customTable thead {
+    color: rgb(128, 178, 255);
+    background-color: rgb(63, 66, 64);
+}
+
+.customTable th,
+.customTable td {
+    padding: 12px 16px;
+    text-align: center;
+}
+
+.customTable tr:not(:first-child) {
+    border-top: 2px solid rgb(113, 132, 161);
+}
+
+.customTable tfoot tr {
+    background-color: rgb(63, 66, 64);
+    color: rgb(128, 178, 255);
+    font-weight: bold;
+    border-top: 4px solid rgb(113, 132, 161);
+}
+
+.customTable th {
+    font-weight: bold;
+
+}
+
+.customTable tbody tr:nth-child(even) {
+    background-color: var(--header-bg-color);
+}
+
+.customTable tbody tr:hover {
+    background-color: rgba(128, 178, 255, 0.3);
+}
+
+.customTable tbody tr td a {
+    color: rgb(128, 178, 255);
+    text-decoration: none;
+    cursor: pointer;
+}

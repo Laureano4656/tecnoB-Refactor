@@ -73,21 +73,47 @@ function createCell(text) {
 
 function createActionsCell(student) {
 	const td = document.createElement('td')
+	const editBtn = document.createElement('a')
+	editBtn.className = 'tooltip-container'
+	const editIcon = document.createElement('span')
+	editIcon.className = 'material-icons'
+	editIcon.textContent = 'edit'
+	const editToolTip = document.createElement('div')
+	editToolTip.className = 'tooltip'
+	editToolTip.textContent = 'Editar'
+	editBtn.appendChild(editToolTip)
+	editBtn.appendChild(editIcon)
 
-	const editBtn = document.createElement('button')
-	editBtn.textContent = 'Editar'
-	editBtn.className = 'w3-button w3-blue w3-small'
 	editBtn.addEventListener('click', () => fillForm(student))
 
-	const deleteBtn = document.createElement('button')
-	deleteBtn.textContent = 'Borrar'
-	deleteBtn.className =
-		'w3-button w3-red w3-small w3-margin-left w3-margin-right'
+	const deleteBtn = document.createElement('a')
+	deleteBtn.classList.add(
+		'tooltip-container',
+		'w3-margin-left',
+		'w3-margin-right',
+	)
+	const deleteIcon = document.createElement('span')
+	deleteIcon.className = 'material-icons'
+	deleteIcon.textContent = 'delete'
+	const deleteToolTip = document.createElement('div')
+	deleteToolTip.className = 'tooltip'
+	deleteToolTip.textContent = 'Eliminar'
+	deleteBtn.appendChild(deleteToolTip)
+	deleteBtn.appendChild(deleteIcon)
+
 	deleteBtn.addEventListener('click', () => confirmDelete(student.id))
 
 	const subjectsBtn = document.createElement('a')
-	subjectsBtn.textContent = 'Materias'
-	subjectsBtn.classList.add('w3-button', 'w3-small', 'w3-green')
+	subjectsBtn.className = 'tooltip-container'
+	const subjectsIcon = document.createElement('span')
+	subjectsIcon.className = 'material-icons'
+	subjectsIcon.textContent = 'layers'
+	const subjectsToolTip = document.createElement('div')
+	subjectsToolTip.className = 'tooltip'
+	subjectsToolTip.textContent = 'Materias'
+	subjectsBtn.appendChild(subjectsToolTip)
+	subjectsBtn.appendChild(subjectsIcon)
+
 	subjectsBtn.href = `studentSubjects.html?studentId=${student.id}`
 
 	td.appendChild(editBtn)
