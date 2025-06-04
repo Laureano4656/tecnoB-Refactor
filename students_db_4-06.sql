@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2025 a las 23:39:46
+-- Tiempo de generación: 04-06-2025 a las 15:42:21
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -50,22 +50,23 @@ INSERT INTO `students` (`id`, `fullname`, `email`, `age`) VALUES
 --
 
 CREATE TABLE `students_subjects` (
-  `student_subject_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
-  `nota` int(2) DEFAULT NULL,
-  `state` enum('Habilitado','Promocionado','Aprobado con final','Desaprobado','En curso') COLLATE utf8_unicode_ci NOT NULL
+  `state` enum('Habilitado','Promocionado','Desaprobado','Aprobado con final','En curso') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `grade` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `students_subjects`
 --
 
-INSERT INTO `students_subjects` (`student_subject_id`, `student_id`, `subject_id`, `nota`, `state`) VALUES
-(2, 2, 2, 7, 'Aprobado con final'),
-(3, 3, 3, 4, 'Desaprobado'),
-(4, 2, 1, 9, 'Promocionado'),
-(5, 1, 1, 5, 'Habilitado');
+INSERT INTO `students_subjects` (`id`, `student_id`, `subject_id`, `state`, `grade`) VALUES
+(1, 1, 1, 'Habilitado', 5),
+(2, 2, 2, 'Desaprobado', 3),
+(3, 3, 3, 'Aprobado con final', 7),
+(4, 1, 2, 'Desaprobado', 2),
+(5, 1, 3, 'Promocionado', 9);
 
 -- --------------------------------------------------------
 
@@ -86,7 +87,7 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`subject_id`, `name`, `year`, `description`, `professor_name`) VALUES
-(1, 'Data Structures and Algorithms I', 1, 'This is the first subject where you learn about algorithms', 'Pedro Pascal'),
+(1, 'Data Structures and Algorithms I', 1, 'This is the first subject where you learn about', 'Pedro Pascal'),
 (2, 'Data Structures and Algorithms II', 2, 'This is the second subject where you learn about algorithms', 'Bella Ramsey'),
 (3, 'Computer Arquitecture', 2, 'This is the first subject where you learn about computer arquitecture', 'Jaime Lanister');
 
@@ -98,21 +99,22 @@ INSERT INTO `subjects` (`subject_id`, `name`, `year`, `description`, `professor_
 -- Indices de la tabla `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email_unique` (`email`);
 
 --
 -- Indices de la tabla `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  ADD PRIMARY KEY (`student_subject_id`),
-  ADD KEY `student_id` (`student_id`),
-  ADD KEY `subject_id` (`subject_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_id` (`student_id`,`subject_id`);
 
 --
 -- Indices de la tabla `subjects`
 --
 ALTER TABLE `subjects`
-  ADD PRIMARY KEY (`subject_id`);
+  ADD PRIMARY KEY (`subject_id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -128,7 +130,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT de la tabla `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  MODIFY `student_subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT de la tabla `subjects`
