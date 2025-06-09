@@ -25,8 +25,13 @@ async function loadSubjects() {
 		const subjects = await subjectsAPI.fetchAll()
 		renderSubjectSelect(subjects)
 	} catch (err) {
-		alert('Error cargando materias')
-		console.error(err.message)
+		const errorDiv = document.getElementById('errorMessage')
+		errorDiv.textContent = 'Error en la operacion: ' + err
+		errorDiv.style.display = 'block'
+		setTimeout(() => {
+			errorDiv.style.display = 'none'
+		}, 3000)
+		console.error(err)
 	}
 }
 function createSubjectOption(subject) {
@@ -66,7 +71,13 @@ function setupFormHandler() {
 			clearForm()
 			loadStudentSubjects()
 		} catch (err) {
-			alert(`Error guardando materia del estudiante: ${err}`)
+			const errorDiv = document.getElementById('errorMessage')
+			errorDiv.textContent = 'Error en la operacion: ' + err
+			errorDiv.style.display = 'block'
+			setTimeout(() => {
+				errorDiv.style.display = 'none'
+			}, 3000)
+			console.error(err)
 		}
 	})
 }
@@ -82,7 +93,13 @@ async function loadStudentSubjects() {
 			'titulo',
 		).textContent = `Materias de ${StudentSubjects[0].fullname}`
 	} catch (err) {
-		alert('Error cargando materias del estudiante')
+		const errorDiv = document.getElementById('errorMessage')
+		errorDiv.textContent = 'Error en la operacion: ' + err
+		errorDiv.style.display = 'block'
+		setTimeout(() => {
+			errorDiv.style.display = 'none'
+		}, 3000)
+		console.error(err)
 		console.error(err.message)
 	}
 }
@@ -167,7 +184,12 @@ async function deleteStudentSubject(id) {
 		loadSubjects()
 	} catch (err) {
 		console.error(err)
-		alert('Error al borrar la materia del estudiante')
+		const errorDiv = document.getElementById('errorMessage')
+		errorDiv.textContent = 'Error en la operacion: ' + err
+		errorDiv.style.display = 'block'
+		setTimeout(() => {
+			errorDiv.style.display = 'none'
+		}, 3000)
 	}
 }
 document.addEventListener('DOMContentLoaded', () => {

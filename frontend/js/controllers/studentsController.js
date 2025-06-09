@@ -20,7 +20,12 @@ function setupFormHandler() {
 			clearForm()
 			loadStudents()
 		} catch (err) {
-			alert('Error al guardar el estudiante: ' + err)
+			const errorDiv = document.getElementById('errorMessage')
+			errorDiv.textContent = 'Error en la operacion: ' + err
+			errorDiv.style.display = 'block'
+			setTimeout(() => {
+				errorDiv.style.display = 'none'
+			}, 3000)
 			console.error(err)
 		}
 	})
@@ -136,7 +141,12 @@ async function confirmDelete(id) {
 		await studentsAPI.remove(id)
 		loadStudents()
 	} catch (err) {
-		console.error('Error al borrar:', err)
-		alert('Error al borrar el estudiante: ' + err)
+		const errorDiv = document.getElementById('errorMessage')
+		errorDiv.textContent = 'Error al eliminar el estudiante: ' + err
+		errorDiv.style.display = 'block'
+		setTimeout(() => {
+			errorDiv.style.display = 'none'
+		}, 3000)
+		console.error(err)
 	}
 }

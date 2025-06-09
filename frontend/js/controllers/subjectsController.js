@@ -32,7 +32,12 @@ function setupFormHandler() {
 			clearForm()
 			loadSubjects()
 		} catch (err) {
-			alert('Error al guardar la materia: ' + err)
+			const errorDiv = document.getElementById('errorMessage')
+			errorDiv.textContent = 'Error en la operacion: ' + err
+			errorDiv.style.display = 'block'
+			setTimeout(() => {
+				errorDiv.style.display = 'none'
+			}, 3000)
 			console.error(err)
 		}
 	})
@@ -122,7 +127,12 @@ async function deleteSubject(id) {
 		const response = await subjectsAPI.remove(id)
 		loadSubjects()
 	} catch (err) {
-		alert('Error al borrar la materia: ' + err)
+		const errorDiv = document.getElementById('errorMessage')
+		errorDiv.textContent = 'Error en la operacion: ' + err
+		errorDiv.style.display = 'block'
+		setTimeout(() => {
+			errorDiv.style.display = 'none'
+		}, 3000)
 		console.error(err)
 	}
 }
