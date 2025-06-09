@@ -18,12 +18,20 @@ function handleGet($conn) {
 function handlePost($conn) {
     try{
         $input = json_decode(file_get_contents("php://input"), true);        
-        if (createStudent($conn, $input['fullname'], $input['email'], $input['age'])) {
+        $result = createStudent($conn, $input['fullname'], $input['email'], $input['age']);
+        if ($result["state"]) {
             echo json_encode(["message" => "Estudiante agregado correctamente"]);
+        }else{
+            throw new Exception("Error al agregar el estudiante", $result['errno']);
         }
     }catch(Exception $e){
-        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
-        echo json_encode(["error" => $e->getMessage()]);
+        if ($e->getCode() == 1062) { // Duplicate entry error code
+            http_response_code(409); // Conflict
+            echo json_encode(["error" => "Ya existe un estudiante con el mismo email"]);
+        } else {
+            http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+            echo json_encode(["error" => $e->getMessage()]);
+        }        
         return;
     }
 }
@@ -31,12 +39,20 @@ function handlePost($conn) {
 function handlePut($conn) {
     try{
         $input = json_decode(file_get_contents("php://input"), true);
-        if (updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age'])) {
+        $result = updateStudent($conn, $input['id'], $input['fullname'], $input['email'], $input['age']);
+        if ($result["state"]) {
             echo json_encode(["message" => "Actualizado correctamente"]);
+        }else{
+            throw new Exception("Error al actualizar el estudiante", $result["errno"]);
         }
     }catch(Exception $e){
-        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
-        echo json_encode(["error" => $e->getMessage()]);
+        if ($e->getCode() == 1062) { // Duplicate entry error code
+            http_response_code(409); // Conflict
+            echo json_encode(["error" => "Ya existe un estudiante con el mismo email"]);
+        } else {
+            http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+            echo json_encode(["error" => $e->getMessage()]);
+        }
         return;
     }
 }
@@ -44,12 +60,20 @@ function handlePut($conn) {
 function handleDelete($conn) {
     try{
         $input = json_decode(file_get_contents("php://input"), true);
-        if (deleteStudent($conn, $input['id'])) {
+        $result = deleteStudent($conn, $input['id']);
+        if ($result["state"]) {
             echo json_encode(["message" => "Eliminado correctamente"]);
-        } 
+        } else {
+            throw new Exception("Error al eliminar el estudiante", $result["errno"]);
+        }
     }catch(Exception $e){
-        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
-        echo json_encode(["error" => $e->getMessage()]);
+        if ($e->getCode() == 1451) { 
+            http_response_code(409); 
+            echo json_encode(["error" => "No se puede eliminar el estudiante porque tiene materias asociadas"]);
+        } else {
+            http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+            echo json_encode(["error" => $e->getMessage()]);
+        }
         return;
     }
 }

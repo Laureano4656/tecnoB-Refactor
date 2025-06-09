@@ -19,25 +19,44 @@ function handlePost($conn)
 {
     try {
         $input = json_decode(file_get_contents("php://input"), true); 
-        
-        if (createStudentSubject($conn, $input['student_id'], $input['subject_id'], $input['state'], $input['nota'])) {
+        $result = createStudentSubject($conn, $input['student_id'], $input['subject_id'], $input['state'], $input['nota']);
+        if ($result["state"]) {
             echo json_encode(["message" => "Materia para estudiante agregado correctamente"]);
-        } 
-    } catch (Exception $e) {              
-        http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
-        echo json_encode(["error" => $e->getMessage()]);
+        } else {
+            throw new Exception("Error al agregar la materia", $result["errno"]);
+        }
+    } catch (Exception $e) {
+        if ($e->getCode() == 1062) { // Duplicate entry error code
+            http_response_code(409); // Conflict
+            echo json_encode(["error" => "Ya existe una materia con el mismo nombre para este estudiante"]);
+        } else {
+            http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+            echo json_encode(["error" => $e->getMessage()]);
+        }        
         return;
     }
 }
 
 function handlePut($conn)
 {
-    $input = json_decode(file_get_contents("php://input"), true);
-    if (updateStudentSubject($conn, $input['id'], $input['state'], $input['nota'])) {
-        echo json_encode(["message" => "Actualizado correctamente"]);
-    } else {
-        http_response_code(500);
-        echo json_encode(["error" => "No se pudo actualizar"]);
+    // TODO : Validate for duplicate entries
+    try{
+        $input = json_decode(file_get_contents("php://input"), true);
+        $result =updateStudentSubject($conn, $input['id'], $input['state'], $input['nota']);
+        if ($result["state"]) {
+            echo json_encode(["message" => "Actualizado correctamente"]);
+        } else {
+            throw new Exception("Error al actualizar la materia", $result["errno"]);
+        }
+    }catch (Exception $e) {
+        if ($e->getCode() == 1062) { // Duplicate entry error code
+            http_response_code(409); // Conflict
+            echo json_encode(["error" => "Ya existe una materia con el mismo nombre para este estudiante"]);
+        } else {
+            http_response_code($e->getCode() ?: 500); // Use the exception code or default to 500
+            echo json_encode(["error" => $e->getMessage()]);
+        }
+        return;
     }
 }
 

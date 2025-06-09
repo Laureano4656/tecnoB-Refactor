@@ -181,6 +181,7 @@ async function deleteStudentSubject(id) {
 
 	try {
 		const response = await studentsSubjectsAPI.remove(id)
+		loadStudentSubjects()
 		loadSubjects()
 	} catch (err) {
 		console.error(err)
